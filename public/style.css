@@ -15,7 +15,7 @@ body {
   background: white;
   padding: 32px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
 h1 {
@@ -205,4 +205,61 @@ h3 {
   color: #999;
   font-style: italic;
   margin-top: 8px;
+}
+
+.fila-titulo-copiar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fila-titulo-copiar h3 {
+  margin: 0;
+}
+
+.copiar {
+  padding: 6px 12px;
+  background: #1db954;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.copiar:hover {
+  background: #17a34a;
+}
+
+.lista-isrc {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.fila-track {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.fila-track:hover {
+  background: #f7f7f9;
+}
+
+.fila-track .num {
+  color: #999;
+}
+
+.fila-track .isrc-track {
+  font-family: monospace;
+  color: #1db954;
+  font-weight: bold;
 }
