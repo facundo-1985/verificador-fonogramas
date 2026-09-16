@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Verificador de fonogramas - Spotify</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>Verificador de fonogramas</h1>
+      <p class="subtitulo">Completá uno o más campos para buscar</p>
+
+      <form id="formulario">
+        <input type="text" id="artista" placeholder="Nombre del artista" />
+        <input type="text" id="interpretacion" placeholder="Interpretación" />
+        <input type="text" id="album" placeholder="Álbum" />
+        <input type="text" id="isrc" placeholder="ISRC" />
+        <button type="submit">Buscar</button>
+      </form>
+
+      <div id="resultado"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
