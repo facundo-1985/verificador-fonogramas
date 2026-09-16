@@ -245,7 +245,7 @@ async function mostrarDetalleTrack(trackId) {
         ${t.imagen ? `<img src="${t.imagen}" alt="Portada">` : ''}
         <div class="datos">
           <strong>${t.titulo}</strong>
-          <p>ISRC: ${t.isrc || 'no informado'}</p>
+          <p>ISRC: <span class="isrc-track">${t.isrc || 'no informado'}</span> ${t.isrc ? `<button class="copiar-uno" title="Copiar ISRC" onclick="copiarISRCIndividual(this, '${t.isrc}')">📋</button>` : ''}</p>
           <p>Artistas: ${t.artistas.join(', ')}</p>
           <p>Álbum: ${t.album} (${t.tipo_album})</p>
           <p>Sello: ${t.sello}</p>
