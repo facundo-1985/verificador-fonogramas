@@ -261,11 +261,16 @@ h3 {
   text-decoration: underline;
 }
 
-.fila-track .isrc-track {
+.isrc-track {
   font-family: monospace;
   color: #1db954;
   font-weight: bold;
   user-select: all;
+  cursor: text;
+}
+
+.fila-track .isrc-track {
+  margin: 0;
 }
 
 .copiar-uno {
