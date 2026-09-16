@@ -240,26 +240,43 @@ h3 {
 
 .fila-track {
   display: grid;
-  grid-template-columns: 28px 1fr auto;
+  grid-template-columns: 28px 1fr auto auto;
   gap: 10px;
   align-items: center;
   padding: 8px 10px;
   border: 1px solid #eee;
   border-radius: 6px;
-  cursor: pointer;
   font-size: 13px;
-}
-
-.fila-track:hover {
-  background: #f7f7f9;
 }
 
 .fila-track .num {
   color: #999;
 }
 
+.fila-track .titulo-track {
+  cursor: pointer;
+}
+
+.fila-track .titulo-track:hover {
+  text-decoration: underline;
+}
+
 .fila-track .isrc-track {
   font-family: monospace;
   color: #1db954;
   font-weight: bold;
+  user-select: all;
+}
+
+.copiar-uno {
+  border: none;
+  background: #f0f0f0;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.copiar-uno:hover {
+  background: #e2e2e2;
 }
