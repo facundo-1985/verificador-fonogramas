@@ -136,10 +136,11 @@ async function mostrarTracksAlbum(albumId) {
 
     album.tracks.forEach(t => {
       html += `
-        <div class="fila-track" onclick="mostrarDetalleTrack('${t.id}')" data-isrc="${t.isrc}">
+        <div class="fila-track" data-isrc="${t.isrc}">
           <span class="num">${t.numero}.</span>
-          <span class="titulo-track">${t.titulo}</span>
+          <span class="titulo-track" onclick="mostrarDetalleTrack('${t.id}')">${t.titulo}</span>
           <span class="isrc-track">${t.isrc}</span>
+          <button class="copiar-uno" title="Copiar este ISRC" onclick="event.stopPropagation(); copiarISRCIndividual(this, '${t.isrc}')">📋</button>
         </div>
       `;
     });
@@ -150,6 +151,18 @@ async function mostrarTracksAlbum(albumId) {
   } catch (error) {
     mostrarError('Error de conexión con el servidor');
   }
+}
+
+function copiarISRCIndividual(boton, isrc) {
+  if (!isrc || isrc === 'no informado') return;
+
+  navigator.clipboard.writeText(isrc).then(() => {
+    const textoOriginal = boton.textContent;
+    boton.textContent = '✅';
+    setTimeout(() => { boton.textContent = textoOriginal; }, 1000);
+  }).catch(() => {
+    alert('No se pudo copiar. ISRC: ' + isrc);
+  });
 }
 
 function copiarISRCs(boton) {
