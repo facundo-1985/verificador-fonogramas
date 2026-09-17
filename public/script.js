@@ -23,6 +23,7 @@ formulario.addEventListener('submit', async (e) => {
     return;
   }
 
+  formulario.reset();
   mostrarCargando();
 
   const parametros = new URLSearchParams({ artista, interpretacion, album, isrc });
