@@ -222,24 +222,6 @@ async function mostrarDetalleTrack(trackId) {
       return;
     }
 
-    let htmlCreditos = '';
-    if (t.creditos_musicbrainz.disponible && t.creditos_musicbrainz.creditos.length > 0) {
-      htmlCreditos = `
-        <h3>Créditos (MusicBrainz)</h3>
-        <div class="lista">
-          ${t.creditos_musicbrainz.creditos.map(c => `
-            <div class="item-credito">
-              <strong>${c.nombre}</strong>
-              <span>${c.rol}</span>
-            </div>
-          `).join('')}
-        </div>
-        <p class="nota">Fuente comunitaria (MusicBrainz), no oficial — puede estar incompleta.</p>
-      `;
-    } else {
-      htmlCreditos = `<p class="nota">Créditos: ${t.creditos_musicbrainz.mensaje || 'no disponibles'}</p>`;
-    }
-
     resultadoDiv.innerHTML = `
       <button class="volver" onclick="volver()">&larr; Volver</button>
       <div class="tarjeta">
@@ -258,7 +240,6 @@ async function mostrarDetalleTrack(trackId) {
           <p><a href="${t.url_spotify}" target="_blank">Escuchar en Spotify</a></p>
         </div>
       </div>
-      ${htmlCreditos}
     `;
 
   } catch (error) {
