@@ -37,11 +37,6 @@ formulario.addEventListener('submit', async (e) => {
       return;
     }
 
-    if (datos.modo === 'isrc' && datos.tracks.length > 0) {
-      mostrarDetalleTrack(datos.tracks[0].id);
-      return;
-    }
-
     mostrarResultadosBusqueda(datos);
 
   } catch (error) {
