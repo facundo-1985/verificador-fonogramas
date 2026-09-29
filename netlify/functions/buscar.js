@@ -7,6 +7,19 @@ function primerArtista(texto) {
   return texto.split(/\s*(?:-|,|\/|&| y | feat\.?| ft\.?)\s*/i)[0].trim();
 }
 
+// Cada track que devuelve Spotify ya trae adentro los datos de su álbum.
+// De ahí armamos la lista de álbumes, sin pedirle nada extra a Spotify,
+// así aparecen siempre, sin importar cómo se haya buscado.
+function derivarAlbumesDeTracks(tracksRaw) {
+  const vistos = new Map();
+  tracksRaw.forEach(t => {
+    if (t.album && !vistos.has(t.album.id)) {
+      vistos.set(t.album.id, formatearAlbumResumen(t.album));
+    }
+  });
+  return Array.from(vistos.values());
+}
+
 exports.handler = async (event) => {
   const params = event.queryStringParameters || {};
   const artista = primerArtista((params.artista || '').trim());
@@ -34,7 +47,8 @@ exports.handler = async (event) => {
 
       const datos = await llamarSpotify(`/search?q=${encodeURIComponent(partes.join(' '))}&type=track&limit=10`);
       const resultados = datos.tracks.items.map(formatearTrackResumen);
-      return { statusCode: 200, headers: cabeceras, body: JSON.stringify({ modo: 'isrc', tracks: resultados, albums: [], artists: [] }) };
+      const albumsDerivados = derivarAlbumesDeTracks(datos.tracks.items);
+      return { statusCode: 200, headers: cabeceras, body: JSON.stringify({ modo: 'isrc', tracks: resultados, albums: albumsDerivados, artists: [] }) };
     }
 
     const partes = [];
@@ -46,13 +60,21 @@ exports.handler = async (event) => {
       `/search?q=${encodeURIComponent(partes.join(' '))}&type=track,album,artist&limit=8`
     );
 
+    const tracksRaw = datos.tracks ? datos.tracks.items : [];
+
+    // Combinamos los álbumes que Spotify encontró directamente con los derivados
+    // de los tracks encontrados, sin repetir ninguno (por id)
+    const mapaAlbums = new Map();
+    (datos.albums ? datos.albums.items : []).forEach(a => mapaAlbums.set(a.id, formatearAlbumResumen(a)));
+    derivarAlbumesDeTracks(tracksRaw).forEach(a => { if (!mapaAlbums.has(a.id)) mapaAlbums.set(a.id, a); });
+
     return {
       statusCode: 200,
       headers: cabeceras,
       body: JSON.stringify({
         modo: 'texto',
-        tracks: (datos.tracks ? datos.tracks.items : []).map(formatearTrackResumen),
-        albums: (datos.albums ? datos.albums.items : []).map(formatearAlbumResumen),
+        tracks: tracksRaw.map(formatearTrackResumen),
+        albums: Array.from(mapaAlbums.values()),
         artists: (datos.artists ? datos.artists.items : []).map(formatearArtistaResumen)
       })
     };
